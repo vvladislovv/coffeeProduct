@@ -26,10 +26,10 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md shadow-md safe-area-top">
+    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md shadow-md safe-area-top" suppressHydrationWarning>
       <div className="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2" suppressHydrationWarning>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center" suppressHydrationWarning>
             <span className="text-2xl">☕</span>
           </div>
           <span className="text-xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
@@ -37,20 +37,24 @@ export default function Header() {
           </span>
         </Link>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3" suppressHydrationWarning>
           <Link
             href="/loyalty"
             className="relative p-2 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white hover:scale-110 transition-transform"
+            suppressHydrationWarning
           >
             <Heart className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-              {(points || 100) > 99 ? '99+' : (points || 100)}
-            </span>
+            {(points || 100) > 0 && (points || 100) <= 99 && (
+              <span className="absolute -top-1 -right-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {points || 100}
+              </span>
+            )}
           </Link>
           
           <button
             onClick={() => router.push('/cart')}
             className="relative p-2 rounded-full bg-gradient-to-br from-orange-500 to-red-500 text-white hover:scale-110 transition-transform"
+            suppressHydrationWarning
           >
             <ShoppingCart className="w-5 h-5" />
             {cartCount > 0 && (

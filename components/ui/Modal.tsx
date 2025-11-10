@@ -38,7 +38,7 @@ export default function Modal({ isOpen, onClose, children, title }: ModalProps) 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed inset-x-4 bottom-4 bg-white rounded-3xl shadow-2xl z-50 max-h-[90vh] overflow-y-auto safe-area-bottom"
+            className="fixed inset-x-4 top-20 bg-white rounded-3xl shadow-2xl z-50 max-h-[80vh] overflow-y-auto safe-area-bottom"
           >
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-3xl">
               {title && (

@@ -28,23 +28,51 @@ export default function TelegramProvider({ children }: { children: React.ReactNo
 
       // Удаление атрибута bis_skin_checked, который добавляет Telegram
       const removeBisSkinChecked = () => {
-        const elements = document.querySelectorAll('[bis_skin_checked]');
-        elements.forEach(el => el.removeAttribute('bis_skin_checked'));
+        try {
+          const elements = document.querySelectorAll('[bis_skin_checked]');
+          elements.forEach(el => {
+            try {
+              el.removeAttribute('bis_skin_checked');
+            } catch (e) {
+              // Игнорируем ошибки при удалении атрибута
+            }
+          });
+        } catch (e) {
+          // Игнорируем ошибки
+        }
       };
 
       // Удаляем сразу и после небольшой задержки
       removeBisSkinChecked();
-      setTimeout(removeBisSkinChecked, 100);
-      setTimeout(removeBisSkinChecked, 500);
+      const interval1 = setTimeout(removeBisSkinChecked, 100);
+      const interval2 = setTimeout(removeBisSkinChecked, 500);
+      const interval3 = setTimeout(removeBisSkinChecked, 1000);
 
       // Наблюдатель за изменениями DOM
-      const observer = new MutationObserver(() => {
-        removeBisSkinChecked();
+      const observer = new MutationObserver((mutations) => {
+        let shouldRemove = false;
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'bis_skin_checked') {
+            shouldRemove = true;
+          }
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach((node) => {
+              if (node.nodeType === 1 && (node as Element).hasAttribute('bis_skin_checked')) {
+                shouldRemove = true;
+              }
+            });
+          }
+        });
+        if (shouldRemove) {
+          removeBisSkinChecked();
+        }
       });
+      
       observer.observe(document.body, {
         attributes: true,
         subtree: true,
-        attributeFilter: ['bis_skin_checked']
+        attributeFilter: ['bis_skin_checked'],
+        childList: true
       });
 
       try {
@@ -75,11 +103,14 @@ export default function TelegramProvider({ children }: { children: React.ReactNo
       }
 
       return () => {
+        clearTimeout(interval1);
+        clearTimeout(interval2);
+        clearTimeout(interval3);
         observer.disconnect();
       };
     }
   }, []);
 
-  return <>{children}</>;
+  return <div suppressHydrationWarning>{children}</div>;
 }
 

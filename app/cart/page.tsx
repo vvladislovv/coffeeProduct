@@ -25,7 +25,12 @@ export default function CartPage() {
   };
 
   const calculateSubtotal = () => {
-    return cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+    return cart.reduce((sum, item) => {
+      let itemPrice = item.selectedSize ? item.selectedSize.price : item.product.price;
+      const addonsPrice = (item.selectedAddons || []).reduce((addonSum, addon) => addonSum + addon.price, 0);
+      itemPrice += addonsPrice;
+      return sum + itemPrice * item.quantity;
+    }, 0);
   };
 
   const calculateDeliveryFee = () => {
@@ -156,28 +161,28 @@ export default function CartPage() {
       )}
 
       {/* Итого */}
-      <Card className="p-6 bg-gradient-to-br from-orange-500 to-pink-500 text-gray-50 shadow-2xl">
-        <h3 className="text-lg font-bold mb-4 text-gray-50">Итоговая стоимость</h3>
+      <div className="p-6 bg-gradient-to-br from-orange-500 to-pink-500 rounded-2xl shadow-2xl text-white">
+        <h3 className="text-lg font-bold mb-4 text-white">Итоговая стоимость</h3>
         <div className="space-y-3 mb-4">
-          <div className="flex justify-between text-gray-50">
+          <div className="flex justify-between text-white">
             <span>Товары ({cart.reduce((sum, item) => sum + item.quantity, 0)} шт.):</span>
-            <span className="font-semibold">{calculateSubtotal()} ₽</span>
+            <span className="font-semibold text-white">{calculateSubtotal()} ₽</span>
           </div>
           {deliveryType === 'delivery' && (
-            <div className="flex justify-between text-gray-50">
+            <div className="flex justify-between text-white">
               <span>Доставка:</span>
-              <span className="font-semibold">{calculateDeliveryFee()} ₽</span>
+              <span className="font-semibold text-white">{calculateDeliveryFee()} ₽</span>
             </div>
           )}
           {loyaltyPointsUsed > 0 && (
-            <div className="flex justify-between text-green-200">
+            <div className="flex justify-between text-green-100">
               <span>Скидка (баллы):</span>
-              <span className="font-semibold">-{loyaltyPointsUsed} ₽</span>
+              <span className="font-semibold text-green-100">-{loyaltyPointsUsed} ₽</span>
             </div>
           )}
-          <div className="border-t-2 border-white/40 pt-3 mt-3 flex justify-between text-2xl font-bold text-gray-50">
-            <span>Итого:</span>
-            <span className="text-yellow-200">{calculateTotal()} ₽</span>
+          <div className="border-t-2 border-white/40 pt-3 mt-3 flex justify-between text-2xl font-bold">
+            <span className="text-white">Итого:</span>
+            <span className="text-yellow-300">{calculateTotal()} ₽</span>
           </div>
         </div>
         
@@ -194,7 +199,7 @@ export default function CartPage() {
         >
           Оформить заказ <ArrowRight className="w-5 h-5 ml-2 inline" />
         </Button>
-      </Card>
+      </div>
     </div>
   );
 }

@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Coffee, ShoppingBag, Gift, MessageCircle } from 'lucide-react';
-import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import { categories } from '@/lib/data';
@@ -29,11 +28,11 @@ export default function HomePage() {
         className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 p-6 shadow-2xl"
       >
         <div className="relative z-10">
-          <h1 className="text-3xl font-bold mb-2 text-gray-50">Добро пожаловать! 👋</h1>
-          <p className="text-gray-100 mb-4">Заказывайте любимый кофе за 2 клика</p>
+          <h1 className="text-3xl font-bold mb-2 text-white drop-shadow-lg">Добро пожаловать! 👋</h1>
+          <p className="text-white drop-shadow-md mb-4">Заказывайте любимый кофе за 2 клика</p>
           <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 w-fit">
-            <Gift className="w-5 h-5 text-gray-50" />
-            <span className="font-semibold text-gray-50">{points || 100} баллов</span>
+            <Gift className="w-5 h-5 text-white" />
+            <span className="font-semibold text-white drop-shadow-md">{points || 100} баллов</span>
           </div>
         </div>
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
@@ -47,15 +46,14 @@ export default function HomePage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card
+          <div
             onClick={() => router.push('/menu')}
-            hover
-            className="bg-gradient-to-br from-orange-400 to-red-500 p-6 text-center"
+            className="bg-gradient-to-br from-orange-400 to-red-500 p-6 text-center h-full flex flex-col items-center justify-center rounded-2xl shadow-lg cursor-pointer transition-transform duration-300 hover:scale-105"
           >
-            <Coffee className="w-8 h-8 mx-auto mb-2 text-gray-50" />
-            <h3 className="font-bold text-lg text-gray-50">Меню</h3>
-            <p className="text-sm text-gray-100 mt-1">Выбрать блюда</p>
-          </Card>
+            <Coffee className="w-8 h-8 mb-2 text-white drop-shadow-lg" />
+            <h3 className="font-bold text-lg text-white drop-shadow-md">Меню</h3>
+            <p className="text-sm text-white drop-shadow-sm mt-1">Выбрать блюда</p>
+          </div>
         </motion.div>
 
         <motion.div
@@ -63,15 +61,14 @@ export default function HomePage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card
+          <div
             onClick={() => router.push('/loyalty')}
-            hover
-            className="bg-gradient-to-br from-purple-400 to-pink-500 p-6 text-center"
+            className="bg-gradient-to-br from-purple-400 to-pink-500 p-6 text-center h-full flex flex-col items-center justify-center rounded-2xl shadow-lg cursor-pointer transition-transform duration-300 hover:scale-105"
           >
-            <Gift className="w-8 h-8 mx-auto mb-2 text-gray-50" />
-            <h3 className="font-bold text-lg text-gray-50">Бонусы</h3>
-            <p className="text-sm text-gray-100 mt-1">Программа лояльности</p>
-          </Card>
+            <Gift className="w-8 h-8 mb-2 text-white drop-shadow-lg" />
+            <h3 className="font-bold text-lg text-white drop-shadow-md">Бонусы</h3>
+            <p className="text-sm text-white drop-shadow-sm mt-1">Программа лояльности</p>
+          </div>
         </motion.div>
       </div>
 
@@ -94,25 +91,12 @@ export default function HomePage() {
                 hover
                 className="p-4 text-center"
               >
-                <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-orange-100 to-pink-100 flex items-center justify-center overflow-hidden">
-                  <Image
-                    src={category.icon}
-                    alt={category.name}
-                    width={64}
-                    height={64}
-                    className="object-cover rounded-full"
-                    unoptimized
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<span class="text-4xl">${category.emoji}</span>`;
-                      }
-                    }}
-                  />
+                <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-orange-100 to-pink-100 flex items-center justify-center">
+                  <span className="text-4xl">
+                    {category.emoji}
+                  </span>
                 </div>
-                <h3 className="font-semibold text-gray-800">{category.name}</h3>
+                <h3 className="font-semibold text-gray-800 mt-2">{category.name}</h3>
               </Card>
             </motion.div>
           ))}
@@ -125,11 +109,11 @@ export default function HomePage() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.4 }}
       >
-        <Card className="bg-gradient-to-r from-green-400 to-emerald-500 p-6">
+        <Card className="bg-gradient-to-r from-gray-100 to-gray-50 p-6 border-2 border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-bold mb-1 text-gray-50">🎉 Специальное предложение!</h3>
-              <p className="text-gray-100">Каждый 5-й заказ - бесплатно</p>
+              <h3 className="text-xl font-bold mb-1 text-gray-800">🎉 Акция дня!</h3>
+              <p className="text-gray-700">Скидка 20% на все напитки до конца недели</p>
             </div>
             <div className="text-4xl">🎁</div>
           </div>

@@ -184,15 +184,37 @@ function OrderStatusPageContent() {
 
       {/* Баллы лояльности */}
       {order.loyaltyPointsEarned > 0 && (
-        <Card className="p-6 bg-gradient-to-br from-purple-500 to-pink-500 text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white/80 text-sm">Начислено баллов</p>
-              <p className="text-3xl font-bold">+{order.loyaltyPointsEarned}</p>
+        <motion.div
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.02 }}
+        >
+          <Card 
+            className="p-6 bg-gradient-to-br from-purple-500 to-pink-500 text-white cursor-pointer"
+            onClick={() => router.push('/loyalty')}
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-white/80 text-sm">Начислено баллов</p>
+                <p className="text-3xl font-bold">+{order.loyaltyPointsEarned}</p>
+                <p className="text-white/80 text-xs mt-1">Нажмите, чтобы посмотреть баланс</p>
+              </div>
+              <motion.div 
+                className="text-4xl cursor-pointer"
+                animate={{ 
+                  rotate: [0, -10, 10, -10, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  duration: 0.5,
+                  repeat: Infinity,
+                  repeatDelay: 2
+                }}
+              >
+                🎁
+              </motion.div>
             </div>
-            <div className="text-4xl">🎁</div>
-          </div>
-        </Card>
+          </Card>
+        </motion.div>
       )}
 
       {/* Кнопки действий */}

@@ -335,27 +335,28 @@ export default function CheckoutPage() {
       })()}
 
       {/* Итого */}
-      <Card className="p-6 bg-gradient-to-br from-orange-500 to-pink-500 text-white">
-        <div className="space-y-2 mb-4">
-          <div className="flex justify-between">
+      <div className="p-6 bg-gradient-to-br from-orange-500 to-pink-500 rounded-2xl shadow-2xl text-white">
+        <h3 className="text-lg font-bold mb-4 text-white">Итоговая стоимость</h3>
+        <div className="space-y-3 mb-4">
+          <div className="flex justify-between text-white">
             <span>Товары:</span>
-            <span className="font-semibold">{calculateSubtotal()} ₽</span>
+            <span className="font-semibold text-white">{calculateSubtotal()} ₽</span>
           </div>
           {deliveryType === 'delivery' && (
-            <div className="flex justify-between">
+            <div className="flex justify-between text-white">
               <span>Доставка:</span>
-              <span className="font-semibold">{calculateDeliveryFee()} ₽</span>
+              <span className="font-semibold text-white">{calculateDeliveryFee()} ₽</span>
             </div>
           )}
           {loyaltyPointsUsed > 0 && (
-            <div className="flex justify-between">
+            <div className="flex justify-between text-green-100">
               <span>Скидка (баллы):</span>
-              <span className="font-semibold">-{loyaltyPointsUsed} ₽</span>
+              <span className="font-semibold text-green-100">-{loyaltyPointsUsed} ₽</span>
             </div>
           )}
-          <div className="border-t border-white/30 pt-2 flex justify-between text-xl font-bold">
-            <span>Итого:</span>
-            <span>{calculateTotal()} ₽</span>
+          <div className="border-t-2 border-white/40 pt-3 mt-3 flex justify-between text-2xl font-bold">
+            <span className="text-white">Итого:</span>
+            <span className="text-yellow-300">{calculateTotal()} ₽</span>
           </div>
         </div>
         
@@ -368,7 +369,7 @@ export default function CheckoutPage() {
         >
           Подтвердить заказ
         </Button>
-      </Card>
+      </div>
     </div>
   );
 }

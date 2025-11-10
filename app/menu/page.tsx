@@ -4,7 +4,6 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Search, Filter } from 'lucide-react';
-import Image from 'next/image';
 import ProductCard from '@/components/menu/ProductCard';
 import { products, categories, getProductsByCategory } from '@/lib/data';
 import { Product } from '@/lib/types';
@@ -89,31 +88,15 @@ function MenuPageContent() {
           <button
             key={category.id}
             onClick={() => setSelectedCategory(category.id)}
-            className={`px-4 py-2 rounded-full font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-full font-semibold whitespace-nowrap transition-all flex items-center gap-2 relative ${
               selectedCategory === category.id
                 ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-lg'
                 : 'bg-white text-gray-700'
             }`}
           >
-            <Image
-              src={category.icon}
-              alt={category.name}
-              width={20}
-              height={20}
-              className="object-cover rounded"
-              unoptimized
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const parent = target.parentElement;
-                if (parent && !parent.querySelector('.emoji-fallback')) {
-                  const span = document.createElement('span');
-                  span.className = 'emoji-fallback';
-                  span.textContent = category.emoji;
-                  parent.insertBefore(span, target);
-                }
-              }}
-            />
+            <span className="text-base">
+              {category.emoji}
+            </span>
             {category.name}
           </button>
         ))}
